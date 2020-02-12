@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.*;
  * @date 2020/2/11 15:52
  **/
 @Controller
-public class HelloController {
+public class IndexController {
 //    @GetMapping("/hello")
 //    public String hello(@RequestParam(name ="name")String name, Model model)
 //    {
 //        model.addAttribute("name",name);
 //        return "hello";
 //    }
-    @GetMapping("/hello")
-    public String hello(@RequestParam(name="name") String name, Model model) {
-        model.addAttribute("name", name);
-        return "hello";
+    @GetMapping("/")
+    public String Index() {
+        return "index";
     }
 
     /*@GetMapping("/hello")
