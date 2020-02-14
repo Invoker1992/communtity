@@ -1,8 +1,15 @@
 package com.mrh.community;
 
+import com.mrh.community.mapper.UserMapper;
+import com.mrh.community.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Thanks For Watching！
@@ -12,20 +19,27 @@ import org.springframework.web.bind.annotation.*;
  **/
 @Controller
 public class IndexController {
-//    @GetMapping("/hello")
-//    public String hello(@RequestParam(name ="name")String name, Model model)
-//    {
-//        model.addAttribute("name",name);
-//        return "hello";
-//    }
+
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping("/")
-    public String Index() {
+    public String Index(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie : cookies)
+        {
+            if(cookie.getName().equals("token"))
+            {
+                String token = cookie.getValue();
+                User user = userMapper.findByToken(token);
+                if(user!=null)
+                {
+                    request.getSession().setAttribute("user",user);
+                }
+                break;
+            }
+        }
         return "index";
     }
 
-    /*@GetMapping("/hello")
-    public String hello( Model model) {
-        model.addAttribute("name", "benben");
-        return "hello";
-    }*/
 }
