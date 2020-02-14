@@ -1,4 +1,4 @@
-package com.mrh.community;
+package com.mrh.community.controller;
 
 import com.mrh.community.mapper.UserMapper;
 import com.mrh.community.model.User;
