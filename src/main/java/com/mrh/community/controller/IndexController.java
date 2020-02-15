@@ -1,7 +1,11 @@
 package com.mrh.community.controller;
 
+import com.mrh.community.dto.QuestionDTO;
+import com.mrh.community.mapper.QuestionMapper;
 import com.mrh.community.mapper.UserMapper;
+import com.mrh.community.model.Question;
 import com.mrh.community.model.User;
+import com.mrh.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Thanks For Watching！
@@ -23,22 +28,33 @@ public class IndexController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private QuestionService questionService;
+
     @GetMapping("/")
-    public String Index(HttpServletRequest request) {
+    public String Index(HttpServletRequest request,
+                        Model model)
+    {
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies)
+        if(cookies!=null&&cookies.length!=0)
         {
-            if(cookie.getName().equals("token"))
+            for(Cookie cookie : cookies)
             {
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if(user!=null)
+                if(cookie.getName().equals("token"))
                 {
-                    request.getSession().setAttribute("user",user);
+                    String token = cookie.getValue();
+                    User user = userMapper.findByToken(token);
+                    if(user!=null)
+                    {
+                        request.getSession().setAttribute("user",user);
+                    }
+                    break;
                 }
-                break;
             }
         }
+
+        List<QuestionDTO> questionList = questionService.list();
+        model.addAttribute("questions",questionList);
         return "index";
     }
 
