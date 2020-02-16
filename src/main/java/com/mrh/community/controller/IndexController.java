@@ -1,11 +1,13 @@
 package com.mrh.community.controller;
 
+import com.mrh.community.dto.PaginationDTO;
 import com.mrh.community.dto.QuestionDTO;
 import com.mrh.community.mapper.QuestionMapper;
 import com.mrh.community.mapper.UserMapper;
 import com.mrh.community.model.Question;
 import com.mrh.community.model.User;
 import com.mrh.community.service.QuestionService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String Index(HttpServletRequest request,
-                        Model model)
+                        Model model,
+                        @RequestParam(name = "page",defaultValue = "1")Integer page,
+                        @RequestParam(name = "size",defaultValue = "5")Integer size
+                        )
     {
         Cookie[] cookies = request.getCookies();
         if(cookies!=null&&cookies.length!=0)
@@ -52,9 +57,8 @@ public class IndexController {
                 }
             }
         }
-
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions",questionList);
+        PaginationDTO pagination = questionService.list(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 

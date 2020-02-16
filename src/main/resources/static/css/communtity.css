@@ -12,6 +12,12 @@ body{
     margin-bottom: 15px;
 }
 
+.pic-size{
+    width: 40px;
+    height: 40px;
+}
+
+
 .text-desc{
     font-size: 12px;
     font-weight: normal;
