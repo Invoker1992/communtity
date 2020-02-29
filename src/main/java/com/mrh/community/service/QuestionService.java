@@ -45,7 +45,7 @@ public class QuestionService {
         {
             page = 1;
         }
-        if(page > totalPage)
+        if(page > totalPage && totalPage!=0)    //totalPage!=0自加的判断
         {
             page = totalPage;
         }
@@ -82,7 +82,7 @@ public class QuestionService {
         {
             page = 1;
         }
-        if(page > totalPage)
+        if(page > totalPage && totalPage!=0)
         {
             page = totalPage;
         }
@@ -100,4 +100,31 @@ public class QuestionService {
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
     }
+
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.getById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if(question.getId()==null)
+        {
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }
+        else
+        {
+            //更新
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.update(question);
+        }
+    }
+
+
 }

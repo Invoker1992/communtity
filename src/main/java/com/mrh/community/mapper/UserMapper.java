@@ -2,10 +2,7 @@ package com.mrh.community.mapper;
 
 import com.mrh.community.model.User;
 import org.apache.el.parser.Token;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import javax.naming.Name;
 
@@ -28,4 +25,10 @@ public interface UserMapper {
 
     @Select("select * from user where id = #{id}")
     User findById(@Param("id") Integer id);
+
+    @Select("select * from user where account_id = #{accountId}")
+    User findByAccountId(@Param("accountId")String accountId);
+
+    @Update("update user set name = #{name},token=#{token},gmt_modified = #{gmtModified},avatar_url=#{avatarUrl} where account_id = #{accountId}")
+    void update(User user);
 }
