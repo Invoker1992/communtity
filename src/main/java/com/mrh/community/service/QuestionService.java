@@ -4,6 +4,7 @@ import com.mrh.community.dto.PaginationDTO;
 import com.mrh.community.dto.QuestionDTO;
 import com.mrh.community.exception.CustomizeErrorCode;
 import com.mrh.community.exception.CustomizeException;
+import com.mrh.community.mapper.QuestionExtMapper;
 import com.mrh.community.mapper.QuestionMapper;
 import com.mrh.community.mapper.UserMapper;
 import com.mrh.community.model.Question;
@@ -28,6 +29,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -151,5 +155,12 @@ public class QuestionService {
         }
     }
 
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
+    }
 
 }
