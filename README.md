@@ -9,3 +9,4 @@
 ##工具
 [bootsrap]https://www.bootcss.com/  
 [lombok]https://projectlombok.org  
+[Mybatis Generator]mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate  
