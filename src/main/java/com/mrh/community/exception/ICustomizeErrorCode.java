@@ -1,5 +1,7 @@
 package com.mrh.community.exception;
 
+import javafx.beans.property.IntegerProperty;
+
 /**
  * Thanks For Watching！
  *
@@ -11,4 +13,5 @@ package com.mrh.community.exception;
 public interface ICustomizeErrorCode {
 
     String getMessage();
+    Integer getCode();
 }
