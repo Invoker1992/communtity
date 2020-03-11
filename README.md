@@ -10,3 +10,5 @@
 [bootsrap]https://www.bootcss.com/  
 [lombok]https://projectlombok.org  
 [Mybatis Generator]mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate  
+[postman]用于网页api测试  
+
