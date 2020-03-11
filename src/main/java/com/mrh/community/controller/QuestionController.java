@@ -1,8 +1,8 @@
 package com.mrh.community.controller;
 
-import com.mrh.community.dto.CommentCreateDTO;
 import com.mrh.community.dto.CommentDTO;
 import com.mrh.community.dto.QuestionDTO;
+import com.mrh.community.enums.CommentTypeEnum;
 import com.mrh.community.service.CommentService;
 import com.mrh.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class QuestionController {
                            Model model)
     {
         QuestionDTO questionDTO = questionService.getById(id);
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         questionService.incView(id); //累加阅读数
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);

@@ -1,7 +1,9 @@
 package com.mrh.community.controller;
 
 import com.mrh.community.dto.CommentCreateDTO;
+import com.mrh.community.dto.CommentDTO;
 import com.mrh.community.dto.ResultDTO;
+import com.mrh.community.enums.CommentTypeEnum;
 import com.mrh.community.exception.CustomizeErrorCode;
 import com.mrh.community.model.Comment;
 import com.mrh.community.model.User;
@@ -9,12 +11,10 @@ import com.mrh.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Thanks For Watching！
@@ -54,6 +54,15 @@ public class CommentController {
         commentService.insert(comment);
         return ResultDTO.okOf();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id")Long id)
+    {
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
+    }
+
 
 }
 
