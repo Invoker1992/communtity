@@ -17,6 +17,11 @@ body{
     height: 40px;
 }
 
+.pic-smallsize{
+    width: 30px;
+    height: 30px;
+}
+
 .text-desc{
     font-size: 12px;
     font-weight: normal;
@@ -80,6 +85,15 @@ body{
     margin-right: 8px;
     font-size: 15px;
     cursor: pointer;
+}
+
+.menu .comment-icon{
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .comment-icon:hover{
+    color: #499ef3;
 }
 
 .menu .active{
