@@ -24,14 +24,24 @@
                 |⌚发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy MMM dd')}"></span>
                 |🐾浏览数：<span th:text="${question.viewCount}"></span>
             </span>
-                <hr>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <a th:href="@{'/publish/'+${question.id}}" class="community-menu"
-                   th:if="${session.user!=null&&session.user.id==question.creator}">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    编辑
-                </a>
+                <!--内容-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
+                <!--标签-->
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <span class="label label-info question-tag" th:each="tag : ${question.tag.split(',')}">
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span class="label label-info" th:text="${tag}"></span>
+                    </span>
+                </div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a th:href="@{'/publish/'+${question.id}}" class="community-menu"
+                       th:if="${session.user!=null&&session.user.id==question.creator}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </a>
+                </div>
             </div>
 
             <!--回复-->
@@ -68,8 +78,11 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
                                  th:id="${'comment-'+comment.id}">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="评论一下" th:id="${'input-'+comment.id}">
-                                    <button type="button" class="btn btn-success pull-right" onclick="comment(this)" th:data-id="${comment.id}">评论</button>
+                                    <input type="text" class="form-control" placeholder="评论一下"
+                                           th:id="${'input-'+comment.id}">
+                                    <button type="button" class="btn btn-success pull-right" onclick="comment(this)"
+                                            th:data-id="${comment.id}">评论
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +116,7 @@
             </div>
         </div>
 
-        <!--右边信息缺省-->
+        <!--右边信息-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>发起人</h4>
@@ -121,9 +134,22 @@
                     </div>
                 </div>
             </div>
+<!--            个人展示的图片-->
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>--关注小橘子社区🍊--</h4>
+                <img class="img-thumbnail question-pic" src="/img/adPic.png">
+            </div>
+
+<!--            相关问题展示-->
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>相关问题</h4>
+                <ul class="question-related">
+                    <li th:each="related : ${relatedQuestions}">
+                        <a th:href="@{'/question/'+ ${related.id}}" th:text="${related.title}"></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

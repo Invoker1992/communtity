@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>发布--小橘子社区</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/communtity.css"/>
@@ -21,15 +21,24 @@
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">标题（简要）：</label>
-                    <input type="text" class="form-control" th:value="${title}" id="title" name="title" placeholder="请输入标题……">
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title"
+                           autocomplete="off"
+                           placeholder="请输入标题……">
                 </div>
                 <div class="form-group">
                     <label for="description">话题补充（必填！请参照右侧提示）：</label>
-                    <textarea name="description" id="description" class="form-control" th:text="${description}" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="description" class="form-control" th:text="${description}"
+                              cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
-                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="请输入标签，以逗号分隔！"></textarea>
+                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
+                           autocomplete="off"
+                           placeholder="请输入标签，以逗号分隔！"></textarea>
+                    <div>
+                        <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('spring')">spring</span></span>
+                        <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('java')">java</span></span>
+                    </div>
                 </div>
                 <div class="container-fluid main">
                     <div class="row">
