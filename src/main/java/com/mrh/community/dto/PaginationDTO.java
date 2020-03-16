@@ -12,9 +12,9 @@ import java.util.List;
  * @date 2020/2/16 14:03
  **/
 @Data
-public class PaginationDTO {
+public class PaginationDTO<T> {
 
-    private List<QuestionDTO> questions;
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;

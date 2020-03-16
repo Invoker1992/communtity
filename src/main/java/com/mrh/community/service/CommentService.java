@@ -2,6 +2,8 @@ package com.mrh.community.service;
 
 import com.mrh.community.dto.CommentDTO;
 import com.mrh.community.enums.CommentTypeEnum;
+import com.mrh.community.enums.NotificationStatusEnum;
+import com.mrh.community.enums.NotificationTypeEnum;
 import com.mrh.community.exception.CustomizeErrorCode;
 import com.mrh.community.exception.CustomizeException;
 import com.mrh.community.mapper.*;
@@ -41,8 +43,11 @@ public class CommentService {
     @Autowired
     private CommentExtMapper commentExtMapper;
 
+    @Autowired
+    private NotificationMapper notificationMapper;
+
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if(comment.getParentId()==null||comment.getParentId()==0)
         {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
@@ -52,13 +57,19 @@ public class CommentService {
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
 
-        if(comment.getType()==CommentTypeEnum.COMMENT.getType())
+        if(comment.getType()==CommentTypeEnum.COMMENT.getType())      //该处的if判断是一级评论还是二级评论，注意CommentTypeEnum.COMMENT.getType()=2，枚举类中设置
         {
-            //回复评论
+            //回复二级评论
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
             if(dbComment == null)
             {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+            }
+            //查找问题
+            Question question = questionMapper.selectByPrimaryKey(commentator.getId());
+            if(question==null)
+            {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             commentMapper.insert(comment);
             //增加评论数
@@ -66,11 +77,13 @@ public class CommentService {
             parentComment.setId(comment.getParentId());
             parentComment.setCommentCount(1);
             commentExtMapper.incCommentCount(parentComment);
+            //创建通知
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT, question.getId());
         }
-        else
+        else        //下面是回复一级评论
         {
-            //回复问题
-            Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
+            //查找问题
+            Question question = questionMapper.selectByPrimaryKey(comment.getParentId()); //此处可能有问题
             if(question==null)
             {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -78,8 +91,24 @@ public class CommentService {
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
+            //创建通知
+            createNotify(comment,question.getCreator(), commentator.getName(),question.getTitle(),NotificationTypeEnum.REPLY_QUESTION, question.getId());
         }
 
+    }
+
+    //ctrl+alt+m 抽离新方法
+    private void createNotify(Comment comment, long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerId) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationType.getType());
+        notification.setOuterid(outerId);
+        notification.setNotifier(comment.getCommentator());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setReceiver(receiver);
+        notification.setNotifierName(notifierName);
+        notification.setOuterName(outerTitle);
+        notificationMapper.insert(notification);
     }
 
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {

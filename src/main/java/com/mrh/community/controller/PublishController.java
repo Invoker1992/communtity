@@ -1,10 +1,12 @@
 package com.mrh.community.controller;
 
+import com.mrh.community.cache.TagCache;
 import com.mrh.community.dto.QuestionDTO;
 import com.mrh.community.mapper.QuestionMapper;
 import com.mrh.community.model.Question;
 import com.mrh.community.model.User;
 import com.mrh.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,12 +42,15 @@ public class PublishController {
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
+
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
     @GetMapping("/publish")
-    public String publish()
+    public String publish(Model model)
     {
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -61,6 +66,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
+        model.addAttribute("tags", TagCache.get());
 
         if(title==null||title=="")
         {
@@ -77,6 +83,14 @@ public class PublishController {
             model.addAttribute("Error","标签不能为空");
             return "publish";
         }
+
+        String invalid = TagCache.filterInvalid(tag);
+        if(StringUtils.isNotBlank(invalid))
+        {
+            model.addAttribute("Error","标签内含有非法字符："+invalid);
+            return "publish";
+        }
+
         User user = (User) request.getSession().getAttribute("user");
         if(user == null)
         {
@@ -91,7 +105,7 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setId(id);
         questionService.createOrUpdate(question);
-        //questionMapper.create(question);
+
         return "redirect:/";
     }
 }

@@ -76,7 +76,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
@@ -119,7 +119,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
@@ -179,8 +179,20 @@ public class QuestionService {
         {
             return new ArrayList<>();
         }
-        String[] tags = StringUtils.split(queryDTO.getTag(), ",");
-        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        String tag = queryDTO.getTag();
+        String regexpTag=null;
+        if(tag.contains(","))
+        {
+            String[] tags = StringUtils.split(tag, ",");
+            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+        else if (tag.contains("."))
+        {
+            String[] tags = StringUtils.split(tag, ".");
+            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+        //String[] tags = StringUtils.split(tag, ",");
+        //String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
         Question question = new Question();
         question.setId(queryDTO.getId());
         question.setTag(regexpTag);
