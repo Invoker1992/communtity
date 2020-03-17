@@ -35,6 +35,11 @@ public class TagCache {
         database.setTags(Arrays.asList("mysql", "sqlite", "oracle", "sql", "nosql", "redis", "mongodb", "memcached", "postgresql"));
         tagDTOS.add(database);
 
+        TagDTO sport = new TagDTO();
+        sport.setCatetoryName("数据库");
+        sport.setTags(Arrays.asList("跑步", "篮球", "足球", "乒乓球", "羽毛球", "游泳", "瑜伽", "高尔夫", "其他"));
+        tagDTOS.add(sport);
+
         return tagDTOS;
     }
 

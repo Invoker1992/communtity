@@ -1,14 +1,18 @@
 ##胡jq的社区
 
 ##资料
-[spring 文档]https://spring.io  
+[spring文档]https://spring.io  
 [github仓库]https://github.com/Invoker1992/communtity  
 [github的oAuth的文档]https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/  
 
-
 ##工具
 [bootsrap]https://www.bootcss.com/  
+[jquery]  
 [lombok]https://projectlombok.org  
+[devtool]热部署  
 [Mybatis Generator]mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate  
-[postman]用于网页api测试  
+[postman]用于网络api测试  
+[markdown]富文本编辑https://www.mdeditor.com  
+
+
 
