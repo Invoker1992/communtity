@@ -3,6 +3,7 @@ package com.mrh.community.service;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.mrh.community.dto.PaginationDTO;
 import com.mrh.community.dto.QuestionDTO;
+import com.mrh.community.dto.QuestionQueryDTO;
 import com.mrh.community.exception.CustomizeErrorCode;
 import com.mrh.community.exception.CustomizeException;
 import com.mrh.community.mapper.QuestionExtMapper;
@@ -41,10 +42,18 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+    public PaginationDTO list(String search,Integer page, Integer size) {
+
+        if(StringUtils.isNotBlank(search))
+        {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         if(totalCount % size == 0)
         {
             totalPage = totalCount / size;
@@ -63,11 +72,10 @@ public class QuestionService {
             page = totalPage;
         }
         paginationDTO.setPagination(totalPage,page);
-        int offset = size * (page-1);
-        QuestionExample questionExample = new QuestionExample();
-
-        questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
+        Integer offset = size * (page-1);
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -179,18 +187,21 @@ public class QuestionService {
         {
             return new ArrayList<>();
         }
-        String tag = queryDTO.getTag();
-        String regexpTag=null;
-        if(tag.contains(","))
-        {
-            String[] tags = StringUtils.split(tag, ",");
-            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
-        }
-        else if (tag.contains("."))
-        {
-            String[] tags = StringUtils.split(tag, ".");
-            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
-        }
+        String[] tags = StringUtils.split(queryDTO.getTag(), ".");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+
+//        String tag = queryDTO.getTag();
+//        String regexpTag=null;
+//        if(tag.contains(","))
+//        {
+//            String[] tags = StringUtils.split(tag, ",");
+//            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+//        }
+//        else if (tag.contains("."))
+//        {
+//            String[] tags = StringUtils.split(tag, ".");
+//            regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+//        }
         //String[] tags = StringUtils.split(tag, ",");
         //String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
         Question question = new Question();

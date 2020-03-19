@@ -20,8 +20,9 @@
     }
 
 </script>
+<!--<body style="background-image: url('/images/backPic.jpg')">-->
 <body>
-<div th:insert="navigation :: nav"></div>
+<div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -46,9 +47,34 @@
                 </div>
             </div>
             <nav aria-label="Page navigation">
-                <ul class="pagination">
+                <ul class="pagination" th:if="${search}">
                     <li th:if="${pagination.showFirstPage}">
-                        <a href="/?page=1" aria-label="Previous">
+                        <a th:href="@{/(page=1,search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/(page=${(pagination.page)-1},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active' : ''">
+                        <a th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/(page=${pagination.page+1},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/(page=${pagination.totalPage},search=${search})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="pagination" th:if="${search}==null">
+                    <li th:if="${pagination.showFirstPage}">
+                        <a th:href="@{/(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
@@ -73,10 +99,25 @@
                 </ul>
             </nav>
         </div>
+
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>热门话题</h3>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
+                <h4>----如有需要，请联系站长🤵----</h4>
+                <img class="img-thumbnail question-pic" src="/images/myQ.png">
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>热门话题🎙</h3>
+                <ul class="question-related">
+                    <li th:each="related : ${relatedQuestions}">
+                        <a th:href="@{'/question/'+ ${related.id}}" th:text="${related.title}"></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>
+<div class="text-center" th:insert="~{footer :: foot}"></div>
 </body>
 </html>

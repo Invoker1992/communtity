@@ -1,9 +1,13 @@
 body{
-    background-color: #efefef;
+    background-image: url("../images/backPic.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .main{
-    background-color: white;
+    background-color:white;
+    filter:alpha(opacity:50); opacity:0.9;  -moz-opacity:0.9;-khtml-opacity: 0.9;
     margin: 30px;
 }
 
@@ -44,7 +48,6 @@ body{
     line-height: 25px;
     font-size: 15px;
     margin-left: 0;
-    /*list-style: none;*/
     padding-left: 0;
 }
 
@@ -131,3 +134,10 @@ body{
 .menu .icon:hover{
     color: #499ef3;
 }
+
+.footer{
+    padding: 15px 15px;
+    color: #666;
+}
+
+

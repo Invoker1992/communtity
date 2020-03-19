@@ -43,7 +43,10 @@
                             path : "/js/lib/",  // Autoload modules mode, codemirror, marked... dependents libs path
                             delay:0,
                             watch:false,
-                            placeholder:"请输入话题描述……"
+                            placeholder:"请输入话题描述……",
+                            imageUpload    : true,
+                            imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL : "/file/upload"
                         });
                     });
                 </script>
@@ -104,5 +107,6 @@
         </div>
     </div>
 </div>
+<div class="text-center" th:insert="~{footer :: foot}"></div>
 </body>
 </html>
