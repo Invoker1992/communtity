@@ -20,13 +20,13 @@
     }
 
 </script>
-<!--<body style="background-image: url('/images/backPic.jpg')">-->
+
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现 🏝</h2>
             <hr>
 
             <div class="media" th:each="question : ${pagination.data}">
@@ -40,7 +40,14 @@
                     <h4 class="media-heading">
                         <a th:href="@{'/question/'+ ${question.id}}" th:text="${question.title}"></a>
                     </h4>
-                    <span th:text="${question.description}"></span><br>
+                    <!--此处有问题，为何只每页第一条显示内容-->
+                    <span th:text="${question.description}" th:id="q-description"></span><br>
+                    <script type="application/javascript">
+                        var demoBOx=document.getElementById('q-description');
+                        var demoHtml = demoBOx.innerHTML.slice(0,200)+'...';
+                        demoBOx.innerHTML = demoHtml;
+                    </script>
+
                     <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span
                             th:text="${question.viewCount}"></span> 次浏览 • <span
                             th:text="${#dates.format(question.gmtCreate,'yyyy MMM dd')}"></span> </span>

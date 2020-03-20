@@ -9,6 +9,7 @@ body{
     background-color:white;
     filter:alpha(opacity:50); opacity:0.9;  -moz-opacity:0.9;-khtml-opacity: 0.9;
     margin: 30px;
+    border-radius: 30px;
 }
 
 .btn-publish{
