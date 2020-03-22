@@ -5,10 +5,11 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">小橘子社区🍊</span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">往事随风🎏</span>
                 </button>
-                <a class="navbar-brand" href="/">小橘子社区🍊</a>
+                <a class="navbar-brand" href="/">往事随风🎏</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -16,22 +17,31 @@
                     <div class="form-group">
                         <input type="text" class="form-control" autocomplete="off" name="search" placeholder="搜索话题">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
+                    <button type="submit" class="btn btn-default" style="margin-right: 30px">搜索</button>
                 </form>
+
+                <iframe width="200" scrolling="no" height="45" frameborder="0" allowtransparency="true"
+                        src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1"></iframe>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li th:if="${session.user!=null}">
                         <a href="/publish">发布话题📢</a>
                     </li>
-                    <li><a href="/profile/replies">🔔通知 <span class="badge" th:text="${session.unreadMessage}"></span></a></li>
+                    <li><a href="/profile/replies">🔔通知 <span class="badge"
+                                                              th:text="${session.unreadMessage}"></span></a></li>
                     <li class="dropdown" th:if="${session.user!=null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-                            <span  th:text="${session.user.getName()}"></span>
+                            <span th:text="${session.user.getName()}"></span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/questions">🌕我的话题</a></li>
-                            <li><a href="#">🌗个人资料</a></li>
+                            <!--个人资料待完善-->
+                            <li><a href="#" onclick="function person() {
+                                alert('个人资料暂未完善,后续更新，敬请关注！');
+                            }
+                            person()">🌗个人资料</a></li>
                             <li><a href="/logout">🌚退出登录</a></li>
                         </ul>
                     </li>

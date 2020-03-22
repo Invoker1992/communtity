@@ -1,12 +1,17 @@
 package com.mrh.community.service;
 
+import com.mrh.community.dto.QuestionDTO;
+import com.mrh.community.mapper.UserExtMapper;
 import com.mrh.community.mapper.UserMapper;
+import com.mrh.community.model.Question;
 import com.mrh.community.model.User;
 import com.mrh.community.model.UserExample;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Thanks For Watching！
@@ -18,6 +23,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserExtMapper userExtMapper;
 
     public void createOrUpdate(User user) {
         UserExample userExample = new UserExample();
@@ -43,5 +51,10 @@ public class UserService {
                     .andIdEqualTo(dbUser.getId());
             userMapper.updateByExampleSelective(updateUser,example);
         }
+    }
+
+    public List<User> selectUser() {
+        List<User> users = userExtMapper.selectUser();
+        return users;
     }
 }

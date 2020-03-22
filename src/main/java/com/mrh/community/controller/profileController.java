@@ -6,6 +6,7 @@ import com.mrh.community.model.User;
 import com.mrh.community.service.NotificationService;
 import com.mrh.community.service.QuestionService;
 import javafx.beans.binding.LongExpression;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 
 @Controller
+@Slf4j
 public class profileController {
 
     @Autowired
@@ -36,11 +38,12 @@ public class profileController {
                           @PathVariable(name = "action") String action,
                           Model model,
                           @RequestParam(name = "page",defaultValue = "1")Integer page,
-                          @RequestParam(name = "size",defaultValue = "5")Integer size)
+                          @RequestParam(name = "size",defaultValue = "7")Integer size)
     {
         User user = (User) request.getSession().getAttribute("user");
         if(user==null)
         {
+            log.error("profile:user==null,{}",action);
             return "redirect:/";
         }
 

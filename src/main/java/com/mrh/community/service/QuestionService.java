@@ -216,4 +216,26 @@ public class QuestionService {
 
         return questionDTOS;
     }
+
+    public List<QuestionDTO> selectPopular() {
+        List<Question> questions = questionExtMapper.selectPopular();
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO questionDTO= new QuestionDTO();
+            BeanUtils.copyProperties(q,questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+
+        return questionDTOS;
+    }
+
+    public List<QuestionDTO> selectTop() {
+        List<Question> questions = questionExtMapper.selectTop();
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO questionDTO= new QuestionDTO();
+            BeanUtils.copyProperties(q,questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+
+        return questionDTOS;
+    }
 }

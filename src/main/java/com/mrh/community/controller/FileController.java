@@ -2,6 +2,7 @@ package com.mrh.community.controller;
 
 import com.mrh.community.dto.FileDTO;
 import com.mrh.community.provider.UcloudProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import java.util.Objects;
  * @date 2020/3/18 19:40
  **/
 @Controller
+@Slf4j
 public class FileController {
 
     @Autowired
@@ -40,6 +42,7 @@ public class FileController {
         }
         catch (Exception e)
         {
+            log.error("upload:upload file fail,{}",e);
             e.printStackTrace();
         }
         FileDTO fileDTO = new FileDTO();
