@@ -22,6 +22,14 @@
 [ufile]https://github.com/ucloud/ufile-sdk-java  
 对象存储Java sdk：https://docs.ucloud.cn/storage_cdn/ufile/tools/sdk  
 
+##部署
+--Git  
+--JDK  
+--Maven  
+--Mysql  
+
+
+
 
 
 
