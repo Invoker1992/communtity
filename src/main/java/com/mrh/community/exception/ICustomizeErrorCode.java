@@ -1,7 +1,5 @@
 package com.mrh.community.exception;
 
-import javafx.beans.property.IntegerProperty;
-
 /**
  * Thanks For Watching！
  *

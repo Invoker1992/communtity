@@ -1,11 +1,9 @@
 package com.mrh.community.controller;
 
 import com.mrh.community.dto.PaginationDTO;
-import com.mrh.community.model.Notification;
 import com.mrh.community.model.User;
 import com.mrh.community.service.NotificationService;
 import com.mrh.community.service.QuestionService;
-import javafx.beans.binding.LongExpression;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
