@@ -78,9 +78,9 @@ public class loginController {
         String baseStr = "1234567890";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            int tem = (int) (Math.random() * baseStr.length()) - 1;
+            int tem = (int) (Math.random() * (baseStr.length()- 1));
             while (i == 0 && tem == (baseStr.length() - 1)) {
-                tem = (int) (Math.random() * baseStr.length()) - 1;
+                tem = (int) (Math.random() * (baseStr.length()- 1));
             }
             builder.append(baseStr.charAt(tem));
         }
