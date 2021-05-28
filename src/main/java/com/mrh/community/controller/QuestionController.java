@@ -37,12 +37,11 @@ public class QuestionController {
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
         List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         questionService.incView(id); //累加阅读数
-        //自加
-        if(questionDTO.getTag().contains("."))
+        String tags = questionDTO.getTag();
+        if(!StringUtils.isEmpty(tags)&&tags.contains("."))
         {
-          questionDTO.setTag(StringUtils.replace(questionDTO.getTag(),".",","));
+          questionDTO.setTag(StringUtils.replace(tags,".",","));
         }
-
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);
         model.addAttribute("relatedQuestions",relatedQuestions);

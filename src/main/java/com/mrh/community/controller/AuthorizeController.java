@@ -7,6 +7,7 @@ import com.mrh.community.model.User;
 import com.mrh.community.provider.GithubProvider;
 import com.mrh.community.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -74,7 +75,7 @@ public class AuthorizeController {
         }
         else
         {
-            log.error("callback:get github error,{}",githubUser);
+            //log.error("callback:get github error,{}",githubUser);
             //登录失败，重新登陆
             return "redirect:/";
         }

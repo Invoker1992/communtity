@@ -41,7 +41,7 @@ public class profileController {
         User user = (User) request.getSession().getAttribute("user");
         if(user==null)
         {
-            log.error("profile:user==null,{}",action);
+            //log.error("profile:user==null,{}",action);
             return "redirect:/";
         }
 

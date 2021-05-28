@@ -42,7 +42,7 @@ public class FileController {
         }
         catch (Exception e)
         {
-            log.error("upload:upload file fail,{}",e);
+            //log.error("upload:upload file fail,{}",e);
             e.printStackTrace();
         }
         FileDTO fileDTO = new FileDTO();

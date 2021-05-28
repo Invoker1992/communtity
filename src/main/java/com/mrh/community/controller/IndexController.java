@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -40,13 +42,31 @@ public class IndexController {
         PaginationDTO pagination = questionService.list(search,page,size);
         List<QuestionDTO> popularQuestions = questionService.selectPopular();
         List<QuestionDTO> topQuestions = questionService.selectTop();
-        List<User> topUsers = userService.selectUser();
+        List<User> Users = userService.selectUser();
+        List<User> topUsers = removeDuplicate(Users);
         model.addAttribute("pagination",pagination);
         model.addAttribute("search",search);
         model.addAttribute("topUsers",topUsers); //活跃用户
         model.addAttribute("popularQuestions",popularQuestions); //热门话题
         model.addAttribute("topQuestions",topQuestions); //话题排行榜
         return "index";
+    }
+
+    /**
+     * 去除重复的活跃用户
+     * @param users
+     * @return
+     */
+    private List<User> removeDuplicate(List<User> users){
+        HashSet<String> set = new HashSet<>();
+        List<User> list = new ArrayList<>();
+        for (User user : users) {
+            if(!set.contains(user.getName())){
+                list.add(user);
+                set.add(user.getName());
+            }
+        }
+        return list;
     }
 
 }
