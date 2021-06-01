@@ -45,16 +45,16 @@ public class RegisterController {
         int count = userMapper.getUserNameNum(username);
         if(count>0){
             model.addAttribute("msg","用户名已存在，请更换…");
-            return "/register";
+            return "register";
         }
         try{
             userMapper.registerUser(username,password,avatarUrl.getAvatarUrl());
         }catch (Exception e){
             model.addAttribute("msg", "注册失败，请稍后重试");
-            return "/resister";
+            return "resister";
         }
-        model.addAttribute("msg", "注册成功，请登录！");
-        return "/login";
+        model.addAttribute("loginError", "注册成功，请登录！");
+        return "login";
     }
 
 }

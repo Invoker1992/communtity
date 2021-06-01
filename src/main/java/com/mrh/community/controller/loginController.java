@@ -33,7 +33,7 @@ public class loginController {
 
     @GetMapping("/login")
     public String Login() {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
@@ -55,7 +55,7 @@ public class loginController {
             return "redirect:/";
         }
         model.addAttribute("loginError", "账号密码错误，或用户不存在！");
-        return "/login";
+        return "login";
     }
 
     /**

@@ -28,7 +28,8 @@ function comment2target(targetId, type, content) {
                 if (response.code == 2003) {
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
-                        window.open("https://github.com/login/oauth/authorize?client_id=0c0e48ef8ec519430130&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+//                        window.open("https://github.com/login/oauth/authorize?client_id=0c0e48ef8ec519430130&redirect_uri=http://localhost:80/callback&scope=user&state=1");
+                        alert("评论出错了！稍后再试");
                         window.localStorage.setItem("closable", true);
                     }
                 } else {
@@ -44,7 +45,7 @@ function comment2target(targetId, type, content) {
 
 function comment(e) {
     var commentId = e.getAttribute("data-id");
-    var content = $("#input-" + commentId).val();
+    var content = $('#input-' + commentId).val();
     comment2target(commentId, 2, content);
 }
 

@@ -59,6 +59,7 @@ public class profileController {
             model.addAttribute("pagination",paginationDTO);
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");
+            model.addAttribute("unreadMessage",unreadCount);
         }
 
         return "/profile";

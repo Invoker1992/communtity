@@ -66,7 +66,8 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             //查找问题
-            Question question = questionMapper.selectByPrimaryKey(commentator.getId());
+//            Question question = questionMapper.selectByPrimaryKey(commentator.getId());
+            Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question==null)
             {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);

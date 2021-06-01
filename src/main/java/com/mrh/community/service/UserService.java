@@ -30,7 +30,8 @@ public class UserService {
     public void createOrUpdate(User user) {
         UserExample userExample = new UserExample();
         userExample.createCriteria()
-                .andAccountIdEqualTo(user.getAccountId());
+                .andNameEqualTo(user.getName());  //因为注册的时候名子是不允许重复的
+//                .andAccountIdEqualTo(user.getAccountId());
         List<User> users = userMapper.selectByExample(userExample);
         if(users.size()==0)
         { //插入
