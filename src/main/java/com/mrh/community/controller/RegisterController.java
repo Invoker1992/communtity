@@ -34,7 +34,7 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String doRegister() {
-        return "/register";
+        return "register";
     }
 
     @RequestMapping(value = "/registerCheck", method = RequestMethod.POST)
