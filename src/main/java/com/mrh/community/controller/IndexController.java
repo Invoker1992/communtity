@@ -2,17 +2,15 @@ package com.mrh.community.controller;
 
 import com.mrh.community.dto.PaginationDTO;
 import com.mrh.community.dto.QuestionDTO;
-import com.mrh.community.mapper.UserMapper;
 import com.mrh.community.model.User;
 import com.mrh.community.service.QuestionService;
 import com.mrh.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

@@ -2,12 +2,10 @@ package com.mrh.community.controller;
 
 import com.mrh.community.dto.AccessTokenDTO;
 import com.mrh.community.dto.GithubUser;
-import com.mrh.community.mapper.UserMapper;
 import com.mrh.community.model.User;
 import com.mrh.community.provider.GithubProvider;
 import com.mrh.community.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -67,8 +65,6 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatarUrl());
             userService.createOrUpdate(user);
-            //userMapper.insert(user);
-            //System.out.println("数据插入成功");
             response.addCookie(new Cookie("token",token));
             //登录成功，写cookie，session
             return "redirect:/";
