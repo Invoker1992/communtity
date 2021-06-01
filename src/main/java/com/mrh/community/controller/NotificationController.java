@@ -44,7 +44,7 @@ public class NotificationController {
         }
         else
         {
-            return "/profile";
+            return "profile";
         }
 
     }

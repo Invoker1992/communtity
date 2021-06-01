@@ -61,7 +61,6 @@ public class profileController {
             model.addAttribute("sectionName","最新回复");
             model.addAttribute("unreadMessage",unreadCount);
         }
-
-        return "/profile";
+        return "profile";
     }
 }
