@@ -14,7 +14,6 @@ import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
  * @author HuJiaqun
  * @date 2020/2/26 21:40
  **/
-
 @Configuration
 //@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
